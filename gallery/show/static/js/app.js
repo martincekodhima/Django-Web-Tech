@@ -41,12 +41,11 @@ $(document).ready(function () {
       if (e.which == 13) {
           // togge the dropdown search
           $("#search-dropdown").fadeToggle("fast", "easeOutSine");
-          // clean the screen
-          cleanScreen();
           // pass the keyword so function
           searchTerm = $("#search").val();
-          displayImages(searchTerm,page);
-          return false;
+          searchTerm = searchTerm.split(/[ ,]+/).filter(function(v){return v!==''}).join(',')
+          // redirect 
+          window.location.href = "/search/"+searchTerm;
       }
     });
     
@@ -56,75 +55,20 @@ $(document).ready(function () {
         $("#search").focus();
     });
     
-    // if the random button is pressed then show random pictures
-    $("#random").click(function() {
-        if (!$("#random").hasClass("active")) {
-            $("#random").addClass("active");
-        }
-        cleanScreen();
-        searchTerm = null;
-        displayImages(searchTerm,page);
-    });
-    // same as above only for mobile also hides side nav
-    $("#random-mobile").click(function() {
-        if (!$("#random").hasClass("active")) {
-            $("#random").addClass("active");
-        }
-        cleanScreen();
-        // close side nav
-        $(".button-collapse").sideNav("hide");
-        searchTerm = null;
-        displayImages(searchTerm,page);
-    });
-    
     // start side nav
     $(".button-collapse").sideNav();
     
     // start collapsable in front page
     $('.collapsible').collapsible();
     
-    // function to clean the screen
-    function cleanScreen() {
-        // set page number to 0
-        page = 0;
-        // remove everything in container and append a new row
-        $(".container").html("").append('<div class="row"><div class="col s12 cards-container main-content-0" id="page-'+page+'"></div></div>');
-    }
+    // init the light gallery
+    $('.cards-container').lightGallery({
+        selector: '.card-image',
+        zoom: true,
+        download: true
+    });
     
-    // function to display the images
-    function displayImages(keyword,page) {
-        if (keyword == null) {
-            // show random pictures
-            for (var i = 0; i < 30; i++) {
-                tick++;
-                $(".main-content-"+page).append('<div class="card"><div class="card-image waves-effect waves-block waves-light" data-src="https://source.unsplash.com/random?sig='+tick+'"><img class="activator" src="https://source.unsplash.com/random?sig='+tick+'"></div></div>');
-            }
-        } else {
-            // show pictures from a specific keyword
-            for (var i = 0; i < 30; i++) {
-                tick++;
-                $(".main-content-"+page).append('<div class="card"><div class="card-image waves-effect waves-block waves-light" data-src="https://source.unsplash.com/all/random?'+ keyword  +'&sig='+tick+'"><img class="activator" src="https://source.unsplash.com/all/random?'+ keyword  +'&sig='+tick+'"></div></div>');
-            }
-        }
-        // show the show more button at the end
-        $(".container").append('</div></div><center id="centerButton"><a class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 showMore"><i class="material-icons right">expand_more</i>Show More</a><br><br><br></center>');
-        
-        // attach listener so if the button is clicked show more pages
-        $(".showMore").click(function() {
-            // fade and remove the button
-            $("#centerButton").fadeToggle("400", "easeOutSine", function() { $(this).remove(); });
-            page++;
-            // show page number
-            $(".container").append('<center><h5 class="darken-2 grey-text text-darken-4">Page '+page+'</h5></center><div class="divider"></div><div class="row"><div class="col s12 cards-container main-content-'+page+'" id="page-'+page+'">');
-            // display new images
-            displayImages(searchTerm, page);
-        });
-        
-        // init the light gallery
-        $('.cards-container').lightGallery({
-            selector: '.card-image',
-            zoom: true,
-            download: false
-        });
-    }
+    // for the dropdown
+    $(".dropdown-button").dropdown();
+    
 });

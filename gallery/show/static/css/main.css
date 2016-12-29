@@ -38,4 +38,12 @@ html {
 /* change the color of the nav bar */
 .nav-wrapper {
     background-color: #3F51B5;
+} 
+
+.btn {
+     background-color: #3F51B5;
+}
+
+.btn:hover {
+     background-color: #3849a2;
 }
