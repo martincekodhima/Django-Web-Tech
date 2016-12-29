@@ -1,0 +1,141 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- import roboto -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+        <!-- add lightgallery -->
+        <link type="text/css" rel="stylesheet" href="{% static 'css/lightgallery.min.css' %}" /> 
+        <!-- main.css -->
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <!-- disable favicon -->
+        <link rel="icon" href="data:;base64,=">
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Unsplash Galleria - Upload</title>
+    </head>
+
+    <body>
+        <!-- main navigation bar --> 
+        <div class="navbar-fixed">
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="col s12" style="padding-right:10px;padding-left:10px;">
+                        <a href="/" class="brand-logo">UnSplash Galleria</a>
+                        <!-- icon to show on mobile to open side menu -->
+                        <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+                        <!-- Navbar menu -->
+                        <ul class="right hide-on-med-and-down"> 
+                            <li class="link"><a id="search-navigation">Search<i class="material-icons right">search</i></a></li>
+                            <li class="link"><a href="/random/">Random <i class="material-icons right">shuffle</i></a></li>
+                            <li class="link"><a href="/unsplash/" >UnSplash version</a>
+                            </li>    
+                            {% if user.is_authenticated %}
+                            <!-- Dropdown Structure for the logout -->
+                            <ul id="dropdown-profile" class="dropdown-content">
+                              <li><a href="/upload/">Upload</a></li>
+                              <li><a href="/logout/">Logout</a></li>
+                            </ul>
+                            <li><a class="dropdown-button" href="#!" data-activates="dropdown-profile">{{ request.user.first_name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                            {% else %}
+                            <li><a href="/login/">Login</a> </li>
+                            <li><a href="/register/" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4" >Register</a></li>
+                            {% endif %}
+                        </ul>
+                        {% if user.is_authenticated %}
+                        <!-- Mobile menu -->
+                        <ul class="side-nav" id="mobile-nav">
+                            <li><a href="index.html" class="waves-effect"><i class="material-icons">home</i>Home</a></li>
+                            <li class="link"><a id="search-navigation-mobile" class="waves-effect"><i class="material-icons">search</i>Search</a></li>
+                            <li><a class="waves-effect" href="/random/"><i class="material-icons">shuffle</i>Random</a></li>
+                            <li><div class="divider"></div></li>
+                            <li><a class="waves-effect" href="/upload/"><i class="material-icons">file_upload</i>Upload</a></li>
+                            <li><a class="waves-effect" href="/logout/"><i class="material-icons">exit_to_app</i>Logout</a></li>
+                            <li><div class="divider"></div></li>
+                        </ul>
+                        {% else %}
+                        <!-- Mobile menu -->
+                        <ul class="side-nav" id="mobile-nav">
+                            <li><a href="/" class="waves-effect"><i class="material-icons">home</i>Home</a></li>
+                            <li class="link"><a id="search-navigation-mobile" class="waves-effect"><i class="material-icons">search</i>Search</a></li>
+                            <li><a class="waves-effect" href="/random/"><i class="material-icons">shuffle</i>Random</a></li>
+                            <li><a class="waves-effect" href="/login/"><i class="material-icons">account_circle</i>Login</a></li>
+                            <li><div class="divider"></div></li>
+                            <li><a href="/register/" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4" >Register
+                                </a></li>
+                            <li><div class="divider"></div></li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>                    
+            </nav>
+        </div>
+        <!-- navbar housing the search functionality -->
+        <div id="search-dropdown" style="display:none;">
+            <nav>
+                <div class="nav-wrapper">
+                    <div class="input-field">
+                        <input id="search" type="search" placeholder="Search" required>
+                        <label for="search"><i class="material-icons">search</i></label>
+                        <i class="material-icons" id="close-search">close</i> 
+                    </div>
+                </div>
+            </nav>  
+        </div>
+        <div class="container">
+           <br>
+            <div class="row">
+                <form role="form" action="" method="post" enctype="multipart/form-data" class="col s12">
+                 {% csrf_token %}
+                  <div class="row">
+                    <h3>Upload</h3>
+                    <div class="input-field col s12">
+                      <input id="id_title" maxlength="30" name="title" type="text" class="validate" required/>
+                      <label for="title">Name</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="id_keyword1" maxlength="150" name="keyword1" type="text" class="validate" required />
+                      <label for="keyword1">Keyword 1</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="id_keyword2" maxlength="150" name="keyword2" type="text" class="validate" required />
+                      <label for="keyword2">Keyword 2</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="id_keyword3" name="keyword3" type="text" maxlength="150" class="validate" required />
+                      <label for="keyword3">Keyword 3</label>
+                    </div>
+                  </div>
+                    <div class="file-field input-field">
+                      <div class="btn">
+                        <span>Photo File</span>
+                        <input id="id_photo" name="photo" type="file" required />
+                      </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                      </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Upload
+                        <i class="material-icons right">file_upload</i>
+                      </button>
+                </form>
+              </div>
+        </div>
+       
+        <!--Import javascript libraries-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+        <script src="{% static 'js/lightgallery.min.js' %}"></script>
+        <script src="{% static 'js/lg-zoom.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    </body>
+</html>
