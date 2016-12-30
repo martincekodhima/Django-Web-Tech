@@ -17,6 +17,8 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from . import views
 from django.conf import settings
+from . import api
+
 urlpatterns = [
     url(r'^$', views.show_index, name='show_index'),
     url(r'^random/', views.show_random_images, name='show_random_images'),
@@ -27,6 +29,9 @@ urlpatterns = [
     url(r'^upload/', views.UploadView.as_view(), name="upload"),
     url(r'^login/', views.UserCheck.as_view(), name='login'),
     url(r'^register/', views.UserFormView.as_view(), name='register'),
+    #api stuff
+    url(r'^api/images/(?P<pk>[0-9]+)/$', api.PhotoDetail.as_view()),
+    url(r'^api/images/', api.PhotoList.as_view()),
 ]
 
 if settings.DEBUG:

@@ -86,8 +86,21 @@
                 </div>
             </nav>  
         </div>
+        {% if form.errors %}
+          <div>
+            <nav>
+                <div class="container">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{ error|escape }}
+                        {% endfor %}
+                   {% endfor %}
+                </div>
+            </nav>  
+        </div>
+        {% endif %}
         <div class="container">
-           <br>
+            <br>
             <div class="row">
                 <form role="form" action="" method="post" class="offset-s2 col s8">
                  {% csrf_token %}
@@ -104,8 +117,8 @@
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="id_username" maxlength="150" name="username" type="text" class="validate" required />
-                      <label for="user_name">Username</label>
+                      <input id="id_username" maxlength="150" name="username" type="text" class="validate" required/>
+                      <label for="id_username">Username</label>
                     </div>
                   </div>
                   <div class="row">

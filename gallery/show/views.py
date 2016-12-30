@@ -107,12 +107,13 @@ class UserCheck(view):
     template_name = 'show/login.html'
     
     def get(self,request):
-        return render(request, self.template_name, {})
+        return render(request, self.template_name, {'error': False})
     
     def post(self,request):
+        
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = authenticate(username=username, password=password)
 
         if user is not None:
@@ -120,4 +121,4 @@ class UserCheck(view):
                 login(request, user)
                 return redirect('show_index')
                 
-        return render(request, self.template_name, {})
+        return render(request, self.template_name, {'error': True})

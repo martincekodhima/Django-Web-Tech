@@ -123,11 +123,31 @@
                 <br>
                 <h5>What is UnSplash Galleria?</h5>
                 <p class="flow-text">
-                    UnSplash Galleria is a web application powered by the <a href="https://unsplash.com">Unsplash</a> API allowing users to view pictures in bulk quickly. On each page, 30 pictures are loaded at a time with the ability to load more on request.
+                    UnSplash Galleria is a gallery web application. It features two modes: Local and Unsplash. The Local version shows pictures uploaded by the users. The Unsplash version is powered by the <a href="https://unsplash.com">Unsplash</a> API and allows users to view pictures from Unsplash in bulk quickly. On each page, 30 pictures are loaded at a time.
                 </p>
                 <ul class="collapsible popout" data-collapsible="accordion">
                     <li>
-                        <div class="collapsible-header active"><i class="material-icons">filter_drama</i>How To Use</div>
+                        <div class="collapsible-header active"><i class="material-icons">local_activity</i>How To Use - Local version</div>
+                        <div class="collapsible-body"><p>
+                            Most of the interaction on this website occurs in the navigation bar. The bar features the search icon, the logo, a random button, switching button and links to login and register.
+                            <br><br>
+                            Clicking the logo, brings you back to this page
+                            <br><br>
+                            Clicking on the <i class="material-icons">search</i> toggles a search bar to appear or dissappear. Here you can type any keyword you would like to see pictures of. Clicking the <i class="material-icons">close</i> deletes the text typed and pressing enter searches the keyword. If you want to search more than one keyword, seperate by commas. 
+                            <br><br>
+                            Clicking the random tab shows pictures from all catagories.
+                            <br><br>
+                            Clicking on any picture zooms it in and displays it full screen. Clicking the x at the top right closes the galler view. Clicking on the two arrow will cycle forwards or backwards depending on the direction. Zooming in and out is done through the two icons at the top right. When zoomed in, dragging the photo moves it around.
+                            <br><br>
+                            Clicking login or register allows the user to login or register a new account.
+                            <br><br>
+                            Once logged in, the user can see the pictures they have uploaded and delete if they want to do so.
+                            <br><br>
+                            Clicking the user name enables a drop down menu with the ability to upload new picture or to logout. Clicking upload brings the user to a page where they can upload new pictures.
+                        </p></div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header active"><i class="material-icons">filter_drama</i>How To Use - Unsplash version</div>
                         <div class="collapsible-body"><p>
                             Most of the interaction on this website occurs in the navigation bar. The bar features the search icon, the logo, a random button and a link to UnSplash.
                             <br><br>
@@ -143,6 +163,32 @@
                         </p></div>
                     </li>
                     <li>
+                        <div class="collapsible-header active"><i class="material-icons">code</i>How To Use - API</div>
+                        <div class="collapsible-body"><p>
+                            The api is served using DjangoRestFramework. There is one entry point for the API. This can be found at <a href="/api/images/">/api/images/</a>
+                            <br><br>
+                            /api/images/ lists all the pictures currently stored by the website. It features the id of the post, what user created it, the three keywords associated with the photo, timestamp when it was created and the url to the photo itself. 
+                            <br><br>
+                            If the user wants to see a specific photo visiting <a href="/api/images/30/">/api/images/{#ID}/</a> will show the information about that image. This allows the user to edit the post using the API.
+                            <br><br>
+                            <a href="/api/images/">/api/images/</a>
+                            <br>
+                            Creating a POST request allows the user to add a new entry. The ID needs to be left blank. The image file needs to be base64 encoded. <a href="https://www.base64-image.de/">https://www.base64-image.de/</a> can be used to convert the image.
+                            <br>
+                            Creating a GET request returns a list of all the images in the server.
+                            <br><br>
+                            <a href="/api/images/30/">/api/images/{#ID}/</a>
+                            <br>
+                            Creating a POST request allows the user to add a new entry. The ID needs to be left blank. The image file needs to be base64 encoded. <a href="https://www.base64-image.de/">https://www.base64-image.de/</a> can be used to convert the image.
+                            <br>
+                            Creating a GET request returns the information the image with that ID as it is stored in the website.
+                            <br>
+                            Creating a DELETE request deletes the image with that ID.
+                            <br>
+                            Creating a PUT request allows for the edit of the information about that specific image.
+                        </p></div>
+                    </li>
+                    <li>
                         <div class="collapsible-header"><i class="material-icons">whatshot</i>Features</div>
                         <div class="collapsible-body"><p>
                             Searching capabilities
@@ -151,12 +197,17 @@
                             <br>Endless stream of photos
                             <br>Detailed view of photos
                             <br>Gallery view
+                            <br>Login
+                            <br>Registration
                             <br>Zooming in
                         </p></div>
                     </li>
                     <li>
                         <div class="collapsible-header"><i class="material-icons">place</i>Technology</div>
-                        <div class="collapsible-body"><p>The website uses MaterializeCSS, LightGallery, JQuery and JQueryUI. The data is pulled from UnSplash</p></div>
+                        <div class="collapsible-body"><p>The website uses MaterializeCSS, LightGallery, JQuery and JQueryUI.
+                        <br>
+                        The backend uses Django, DjangoRestFramework and Pillow.
+                        Some data is pulled from UnSplash</p></div>
                     </li>
                 </ul>
             </div>

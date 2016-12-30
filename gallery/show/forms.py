@@ -8,7 +8,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'password']
-
+    
 class UploadFileForm(forms.ModelForm):        
     title = forms.CharField(max_length=50)
     keyword1 = forms.CharField(max_length=50)

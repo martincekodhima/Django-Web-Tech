@@ -86,6 +86,19 @@
                 </div>
             </nav>  
         </div>
+        {% if form.errors %}
+          <div>
+            <nav>
+                <div class="container">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{ error|escape }}
+                        {% endfor %}
+                   {% endfor %}
+                </div>
+            </nav>  
+        </div>
+        {% endif %}
         <div class="container">
            <br>
             <div class="row">
